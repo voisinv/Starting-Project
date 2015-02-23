@@ -5,11 +5,51 @@
 # {} allows for a comma-separated list of "or" expressions
 # ! at the beginning of a pattern will negate the match
 
-module.exports = (grunt) ->
 
+module.exports = (grunt) ->
+  # TODO les liens sous formes de variables
   resources = grunt.file.readJSON 'resources.json'
 
+  # Récupère les confs tasks
+  initialization = grunt.file.readJSON 'conf_tasks.json'
+  grunt.config.init initialization
+
+  # Register task
+  grunt.registerTask 'serve', () ->
+    if grunt.option 'build'
+      grunt.task.run 'buildMode'
+    else
+      grunt.task.run 'connect:server'
+      grunt.task.run 'watch:all'
+
+  grunt.registerTask 'buildMode', null
+
+  grunt.registerTask 'tasktest', ->
+    file = grunt.file.readJSON 'resources.json'
+
+  # Load tasks
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
+  grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-wiredep'
+  grunt.loadNpmTasks 'grunt-file-blocks'
+  grunt.loadNpmTasks 'grunt-contrib-connect'
+  grunt.loadNpmTasks 'grunt-jade'
+  grunt.loadNpmTasks 'grunt-contrib-jshint'
+  grunt.loadNpmTasks 'grunt-coffeelint'
+
+
+
+
+
+
+
+
+
+
+  ###
   grunt.initConfig
+
 
     pkg : grunt.file.readJSON 'package.json'
 
@@ -25,7 +65,7 @@ module.exports = (grunt) ->
           compileDebug: true
       base_path: {
         files: {
-          'app/partials/' : ['dev/partials/{,*/}*.jade']
+          'app/partials/' : ['dev/partials/{,*\/}*.jade']
         },
         options: {
           pretty: true
@@ -40,10 +80,16 @@ module.exports = (grunt) ->
           {
             expand:true
             cwd: resources.dev.assets
-            src: ['**', '**/*.css']
+            src: ['**', '**\/*.css']
             dest: resources.app.assets
           }
           ]
+
+    coffeelint: jsTasksConf.coffeelint
+
+    jshint: jsTasksConf.jshint
+
+    coffee: jsTasksConf.coffee2js
 
     connect:
       options:
@@ -55,25 +101,28 @@ module.exports = (grunt) ->
           base: ['./app', './']
           open: true
 
+
     fileblocks:
       todos:
         src:'./app/index.html'
         blocks:
           app:
-            src:resources.app.scripts + '{,*/}*.js'
+            src:resources.app.scripts + '{,*\/}*.js'
 
     watch:
       all:
         files: [
           'Gruntfile.coffee'
           'dev/*.*'
-          'dev/**/{,*/}*.*'
+          'dev/**\/{,*\/}*.*'
         ]
         tasks : [
           'jade:html'
           'jade:base_path'
           'wiredep'
+          'coffeelint:app'
           'coffee'
+          'jshint:all'
           'fileblocks'
         ]
       options:
@@ -83,52 +132,7 @@ module.exports = (grunt) ->
         event: ['changed', 'added', 'deleted']
         atBegin: true
 
-    coffee:
-      glob_to_multiple:
-        expand: true
-        bare: true
-        flatten: false
-        cwd: resources.dev.scripts
-        src: '{,*/}*.coffee'
-        dest: resources.app.scripts
-        ext: '.js'
-
     wiredep:
       task:
         src: resources.app.index
-
-
-
-
-  grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-contrib-copy'
-  grunt.loadNpmTasks 'grunt-contrib-watch'
-  grunt.loadNpmTasks 'grunt-wiredep'
-  grunt.loadNpmTasks 'grunt-file-blocks'
-  grunt.loadNpmTasks 'grunt-contrib-connect'
-  grunt.loadNpmTasks 'grunt-jade'
-
-  grunt.registerTask 'jade2', ['jade:debug']
-
-  grunt.registerTask 'serve', () ->
-    if grunt.option 'build'
-      grunt.log.ok 'Mode build'
-      grunt.run.task 'buildMode'
-    else
-      grunt.log.ok 'Mode développement'
-      grunt.task.run 'devMode'
-
-
-  grunt.registerTask 'devMode', ->
-    grunt.task.run 'connect:server'
-    grunt.task.run 'watch:all'
-
-  grunt.registerTask 'buildMode', ->
-
-  grunt.registerTask 'copyy', ->
-    grunt.task.run 'copy:main'
-    console.log @name
-
-  grunt.registerTask 'tasktest', ->
-    grunt.task.run ['jade:html', 'jade:base_path']
-
+  ###

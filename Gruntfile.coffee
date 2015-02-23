@@ -14,14 +14,26 @@ module.exports = (grunt) ->
     pkg : grunt.file.readJSON 'package.json'
 
     jade:
-      pretty:
-        files: [
-          "app/index.html" : resources.dev.index
-          'app/partials/' : ['dev/partials/{,*/}*.jade']
-        ]
+      html:
+        files: {
+          './app/' : './dev/index.jade'
+        }
         options:
           pretty: true
-
+          client: false
+          wrap: false
+          compileDebug: true
+      base_path: {
+        files: {
+          'app/partials/' : ['dev/partials/{,*/}*.jade']
+        },
+        options: {
+          pretty: true
+          client: false
+          compileDebug: true
+          basePath: './dev/partials/'
+        }
+      }
     copy :
       main :
         files :[
@@ -58,7 +70,8 @@ module.exports = (grunt) ->
           'dev/**/{,*/}*.*'
         ]
         tasks : [
-          'jade:pretty'
+          'jade:html'
+          'jade:base_path'
           'wiredep'
           'coffee'
           'fileblocks'
@@ -86,12 +99,12 @@ module.exports = (grunt) ->
 
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-jade'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-wiredep'
   grunt.loadNpmTasks 'grunt-file-blocks'
   grunt.loadNpmTasks 'grunt-contrib-connect'
+  grunt.loadNpmTasks 'grunt-jade'
 
   grunt.registerTask 'jade2', ['jade:debug']
 
@@ -115,5 +128,5 @@ module.exports = (grunt) ->
     console.log @name
 
   grunt.registerTask 'tasktest', ->
-    grunt.run.task 'jade'
+    grunt.task.run ['jade:html', 'jade:base_path']
 

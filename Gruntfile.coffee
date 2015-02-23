@@ -80,6 +80,8 @@ module.exports = (grunt) ->
         livereload: '<%= connect.options.livereload %>'
         reload: false
         debounceDelay: 10
+        event: ['changed', 'added', 'deleted']
+        atBegin: true
 
     coffee:
       glob_to_multiple:

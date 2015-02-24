@@ -5,7 +5,6 @@
 # {} allows for a comma-separated list of "or" expressions
 # ! at the beginning of a pattern will negate the match
 
-
 module.exports = (grunt) ->
   # TODO les liens sous formes de variables
   resources = grunt.file.readJSON 'resources.json'
@@ -15,7 +14,7 @@ module.exports = (grunt) ->
   grunt.config.init initialization
 
   # Register task
-  grunt.registerTask 'serve', () ->
+  grunt.registerTask 'serve', ->
     if grunt.option 'build'
       grunt.task.run 'buildMode'
     else
@@ -25,7 +24,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'buildMode', null
 
   grunt.registerTask 'tasktest', ->
-    file = grunt.file.readJSON 'resources.json'
+    grunt.task.run 'karma'
 
   # Load tasks
   grunt.loadNpmTasks 'grunt-contrib-coffee'
@@ -37,6 +36,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-jade'
   grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-coffeelint'
+  grunt.loadNpmTasks 'grunt-karma'
 
 
 

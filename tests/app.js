@@ -1,4 +1,5 @@
-###
+
+/*
 angular.module('myApp', ['ngRoute'])
   .config(['$routeProvider', ($routeProvider) ->
 
@@ -11,6 +12,11 @@ angular.module('myApp', ['ngRoute'])
       redirectTo: '/main'
     }
   ])
-###
-counter = () ->
+ */
 
+(function() {
+  var counter;
+
+  counter = function() {};
+
+}).call(this);

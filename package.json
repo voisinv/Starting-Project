@@ -1,7 +1,7 @@
 {
-  "name": "LCL_Interfaces_Lot2",
+  "name": "Structure-coffee-jade-project",
   "version": "0.0.1",
-  "description": "Interfaces du lot 2",
+  "description": "Structure for a project with coffeescript and jade",
   "main": "Gruntifle.coffee",
   "dependencies": {},
   "devDependencies": {

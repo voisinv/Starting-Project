@@ -26,7 +26,7 @@ module.exports = (config) ->
     exclude: [
     ],
 
-    reporters: ['progress']
+    reporters: ['progress', 'mocha']
 
     port: 9876
 
@@ -47,5 +47,5 @@ module.exports = (config) ->
       'karma-phantomjs-launcher'
       'karma-chrome-launcher'
       'karma-coffee-preprocessor'
-      'karma-growl-reporter'
+      'karma-mocha-reporter'
     ]

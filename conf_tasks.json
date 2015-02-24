@@ -117,6 +117,9 @@
   "karma": {
     "unit": {
       "configFile": "karma.conf.coffee"
+    },
+    "e2e": {
+
     }
   }
 }

@@ -4,9 +4,21 @@ module.exports = (config) ->
 
     basePath: './tests/'
 
-    files: [
-      'app.js', 'test.js'
+    files : [
+      '*.coffee'
     ]
+
+
+    preprocessors:
+      '*.coffee' : ['coffee']
+
+    coffeePreprocessor:
+      transformPath: (path) ->
+        path.replace(/\.coffee$/, '.js')
+      options:
+        bare: false,
+        sourceMap: false
+
 
     frameworks: ['jasmine']
 
@@ -23,11 +35,17 @@ module.exports = (config) ->
     logLevel: config.LOG_INFO
 
     autoWatch: true
-
-    browsers: ['Chrome', 'phantomjs']
+    # Chrome or PhantomJS
+    browsers: ['PhantomJS']
 
     captureTimeout: 60000
 
     singleRun: false
 
-    plugins : ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-chrome-launcher']
+    plugins : [
+      'karma-jasmine'
+      'karma-phantomjs-launcher'
+      'karma-chrome-launcher'
+      'karma-coffee-preprocessor'
+      'karma-growl-reporter'
+    ]

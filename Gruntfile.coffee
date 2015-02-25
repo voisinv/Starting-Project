@@ -23,9 +23,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'buildMode', null
 
-  grunt.registerTask 'tasktest', ->
-    grunt.task.run 'karma'
-
+  grunt.registerTask 'tasktest', ['connect', 'protractor']
   # Load tasks
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-copy'
@@ -37,6 +35,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-karma'
+  grunt.loadNpmTasks 'grunt-protractor-runner'
 
 
 

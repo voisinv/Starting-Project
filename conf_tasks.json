@@ -5,7 +5,7 @@
     "all": {
       "files": [
         "Gruntfile.coffee",
-        "initGruntTasks.json",
+        "conf_tasks.json",
         "dev/*.*",
         "dev/**\/{,*\/}*.*"
       ],
@@ -13,11 +13,20 @@
         "jade:html",
         "jade:base_path",
         "wiredep",
+        "copy:main",
         "coffeelint:app",
         "coffee",
         "jshint:all",
         "fileblocks"
       ]
+    },
+    "karma": {
+        "files": ["./dev/{,*\/}*.*", ".tests/units/{,*\/}*.*"],
+        "tasks": ["karma"]
+    },
+    "protractor": {
+        "files": ["./dev/{,*\/}*.*", ".tests/e2e/{,*\/}*.*"],
+        "tasks": ["protractor"]
     },
     "options": {
       "livereload": "<%= connect.options.livereload %>",
@@ -63,8 +72,14 @@
         {
           "expand": true,
           "cwd": "dev/assets/",
-          "src": ["**", "**\/*.css"],
-          "dest": "app/assets"
+          "src": ["**", "**\/*.*"],
+          "dest": "app/assets/"
+        },
+        {
+          "expand": true,
+          "cwd": "dev/styles/",
+          "src": ["{,*\/}*.css"],
+          "dest": "app/styles/"
         }
       ]
     }
@@ -95,7 +110,7 @@
     "options": {
       "hostname": "localhost",
       "livereload": 35729,
-      "port": 3000
+      "port": 9000
     },
     "server": {
       "options": {
@@ -110,6 +125,9 @@
       "blocks": {
         "app": {
           "src":"app/scripts/{,*\/}*.js"
+        },
+        "styles" : {
+            "src" : "app/styles/{,*\/}*.css"
         }
       }
     }
@@ -117,9 +135,17 @@
   "karma": {
     "unit": {
       "configFile": "karma.conf.coffee"
-    },
-    "e2e": {
-
     }
-  }
+  },
+    "protractor": {
+        "options": {
+            "configFile": "e2e.conf.js",
+            "keepAlive": true,
+            "noColor": false
+        },
+        "your_target": {
+
+
+        }
+    }
 }

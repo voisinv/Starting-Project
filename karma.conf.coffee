@@ -2,7 +2,7 @@ module.exports = (config) ->
 
   config.set
 
-    basePath: './tests/'
+    basePath: './tests/unit/'
 
     files : [
       '*.coffee'

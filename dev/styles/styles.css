@@ -1,0 +1,13 @@
+
+.main {
+    background-color: #23259b;
+    color: yellow;
+    font-size: 50px;
+    line-height: 100px;
+
+}
+
+.title_lcl {
+    margin-left: 100px;
+    font-style: italic;;
+}

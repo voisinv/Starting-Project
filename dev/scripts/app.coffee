@@ -1,5 +1,10 @@
-###
-angular.module('myApp', ['ngRoute'])
+modulesToInject = [
+  'ngRoute'
+  'controllersModule'
+  'servicesModule'
+  'directivesModule'
+]
+angular.module 'myApp', modulesToInject
   .config(['$routeProvider', ($routeProvider) ->
 
     $routeProvider
@@ -11,6 +16,8 @@ angular.module('myApp', ['ngRoute'])
       redirectTo: '/main'
     }
   ])
-###
-counter = () ->
 
+
+angular.module 'controllersModule', []
+angular.module 'servicesModule', []
+angular.module 'directivesModule', []

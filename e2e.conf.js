@@ -4,10 +4,6 @@
 // An example configuration file.
 exports.config = {
     directConnect: true,
-
-    seleniumServerJar: '../node_modules/grunt-protractor-runner/node_modules/protractor/selenium/selenium-server-standalone-2.44.0.jar',
-
-    chromeDriver: '../node_modules/grunt-protractor-runner/node_modules/protractor/selenium/chromedriver',
     baseUrl: 9000,
     framework: 'jasmine',
     capabilities: {
